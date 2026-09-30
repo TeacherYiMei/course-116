@@ -1,0 +1,29 @@
+/* Python 引導式教師教學版 v3 */
+.pyguide-wrap{max-width:1180px}
+.pyguide-top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);font-weight:800}
+.pyguide-top a{color:inherit;text-decoration:none}
+.pyhero{margin:1.3rem 0;padding:1.5rem;border:2px solid var(--u1-line);border-radius:1.1rem;background:var(--u1-bg)}
+.pyhero h1{margin:.2rem 0 .7rem;font-size:clamp(1.8rem,4vw,2.7rem)}
+.pyhero p{line-height:1.8}
+.pynote{padding:.9rem 1rem;border-left:5px solid var(--u1);background:var(--u1-soft);line-height:1.75;border-radius:.5rem}
+.pyprinciples{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin:1rem 0}
+.pyprinciples>div{padding:.85rem;border:1px solid var(--line);border-radius:.85rem;background:#fff;display:flex;flex-direction:column;gap:.25rem}
+.pyprinciples b{font-size:1rem}.pyprinciples span{font-size:.82rem;color:var(--ink-soft);line-height:1.5}
+.pygroups{position:sticky;top:49px;z-index:15;display:flex;gap:.45rem;overflow:auto;padding:.65rem 0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+.pygroups a{white-space:nowrap;padding:.5rem .7rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:inherit;font-weight:800;background:#fff}
+.pyroad{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin:1rem 0 1.5rem}
+.pyroad a{padding:.65rem;border:1px solid var(--line);border-radius:.75rem;background:#fff;text-decoration:none;color:inherit;font-weight:800;line-height:1.35}
+.pyroad a:hover,.pygroups a:hover{background:var(--u1-soft)}
+.pyroad a span{display:block;font-size:.72rem;color:var(--ink-soft);margin-bottom:.2rem}
+.pygroup{margin:1.5rem 0}
+.group-title{display:flex;align-items:flex-start;gap:.8rem;margin:1.5rem 0 .8rem;padding:.9rem 1rem;border-radius:1rem;background:#f8fafc;border:1px solid var(--line)}
+.group-title>span{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--u1);color:#fff;font-weight:900;flex:0 0 auto}
+.group-title h2{margin:.05rem 0 .2rem}.group-title p{margin:0;color:var(--ink-soft);line-height:1.6}
+.pycard{padding:1.15rem;margin:.85rem 0;border:1px solid var(--line);border-radius:1rem;background:#fff;box-shadow:var(--shadow);scroll-margin-top:115px}
+.pycard-head{display:flex;align-items:flex-start;gap:.7rem}.pynum{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--u1);color:#fff;font-weight:900;flex:0 0 auto}.qtag{font-size:.72rem;color:var(--ink-soft);font-weight:900}.pycard h3{margin:.1rem 0 .2rem}.pyconcept{font-size:.86rem;font-weight:800;color:var(--ink-soft)}
+.pycols{display:grid;grid-template-columns:1fr 1.1fr;gap:1rem;margin-top:.9rem}.pybox{padding:.95rem;border:1px solid var(--line);border-radius:.8rem;background:#fafafa}.pybox h4{margin:0 0 .5rem}.pybox p{line-height:1.7}.pybox ol{margin:.2rem 0;padding-left:1.3rem;line-height:1.75}
+.pycode{position:relative;margin-top:.7rem}.pycode pre{margin:0;padding:1rem;border-radius:.7rem;background:#111827;color:#f8fafc;overflow:auto;line-height:1.65;font-size:.9rem;min-height:110px}.pycopy{position:absolute;right:.5rem;top:.5rem;border:1px solid #64748b;background:#fff;border-radius:.45rem;padding:.3rem .55rem;font-weight:800;cursor:pointer}
+.pycheck{margin-top:.8rem;padding:.8rem 1rem;border-radius:.75rem;background:#ecfdf5;border:1px solid #a7f3d0}.pycheck label{display:block;margin:.38rem 0;line-height:1.55}.pycheck input{margin-right:.45rem;width:1.05rem;height:1.05rem;vertical-align:middle}
+.pyfinal{padding:1.3rem;margin:1.5rem 0;border:2px solid var(--u1-line);border-radius:1rem;background:var(--u1-bg);line-height:1.8}.finalflow{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;margin:.8rem 0}.finalflow span{padding:.4rem .65rem;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:900}.finalflow b{color:var(--ink-soft)}
+@media(max-width:900px){.pyprinciples{grid-template-columns:repeat(2,1fr)}.pyroad{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.pycols{grid-template-columns:1fr}.pyprinciples{grid-template-columns:1fr}.pyroad{grid-template-columns:repeat(2,1fr)}.pyguide-top{top:0}.pygroups{top:47px}}

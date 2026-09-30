@@ -1,0 +1,34 @@
+/* AI 旅拍教師預覽版 */
+.travel-wrap{max-width:1100px}
+.travel-top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);font-weight:800}
+.travel-top a{color:inherit;text-decoration:none}
+.hero{margin:1.4rem 0;padding:1.5rem;border:2px solid var(--u1-line);border-radius:1.2rem;background:var(--u1-bg)}
+.hero h1{margin:.25rem 0 .7rem;font-size:clamp(1.7rem,4vw,2.6rem)}
+.hero p{line-height:1.8}
+.eyebrow{font-size:.78rem;font-weight:900;letter-spacing:.06em;color:var(--ink-soft)}
+.teacher-note{padding:.8rem 1rem;border-radius:.8rem;background:#fff7ed;border:1px solid #fed7aa;line-height:1.7}
+.map{margin:1rem 0 1.5rem;padding:1.2rem;border:1px solid var(--line);border-radius:1rem;background:#fff}
+.map-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.map-grid a{display:flex;align-items:center;gap:.45rem;padding:.75rem;border:1px solid var(--line);border-radius:.8rem;text-decoration:none;color:inherit;font-weight:800;background:var(--soft)}
+.map-grid span{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--u1);color:#fff}
+.stage{margin:1.4rem 0;padding:1.2rem;border:1px solid var(--line);border-radius:1.1rem;background:#fff;box-shadow:var(--shadow)}
+.stage-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.stage-num{display:grid;place-items:center;width:2.7rem;height:2.7rem;border-radius:50%;background:var(--u1);color:#fff;font-size:1.15rem;font-weight:900;flex:0 0 auto}
+.stage-head h2{margin:.15rem 0;font-size:1.4rem}
+.teacher-badge{margin-left:auto;padding:.35rem .6rem;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:.75rem;font-weight:900}
+.goal{padding:.8rem 1rem;border-radius:.8rem;background:var(--u1-soft);border-left:5px solid var(--u1)}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.columns section,.task,.template{padding:1rem;border:1px solid var(--line);border-radius:.85rem;background:#fafafa}
+.stage h3{margin:0 0 .6rem;font-size:1rem}
+.stage ul,.stage ol{margin:.2rem 0;padding-left:1.3rem;line-height:1.8}
+.task{margin-top:1rem;background:#f8fafc}
+.template{margin-top:1rem;background:#fffbeb;border-color:#fde68a}
+.row-between{display:flex;justify-content:space-between;gap:.7rem;align-items:center}
+.copy{border:1px solid #d97706;background:#fff7ed;border-radius:.5rem;padding:.35rem .6rem;font-weight:800;cursor:pointer}
+.template pre{white-space:pre-wrap;margin:.5rem 0 0;padding:.8rem;border-radius:.6rem;background:#fff;font:14px/1.8 ui-monospace,Consolas,monospace}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+.checks label{padding:.65rem .7rem;border:1px solid var(--line);border-radius:.65rem;background:#fff;cursor:pointer;line-height:1.5}
+.checks input{width:1.1rem;height:1.1rem;vertical-align:middle}
+.deliver{margin-top:1rem;padding:.8rem 1rem;border-radius:.8rem;background:#ecfdf5;border:1px solid #a7f3d0}
+.final-note{margin:1.5rem 0;padding:1.2rem;border:2px solid var(--u1-line);border-radius:1rem;background:var(--u1-bg);line-height:1.8}
+@media(max-width:700px){.map-grid{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.checks{grid-template-columns:1fr}.teacher-badge{display:none}}
