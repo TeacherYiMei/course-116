@@ -1,37 +1,11 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>進入 Python 的世界 · 畢旅籌備處</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/theme.css">
-<script src="config.js"></script>
-<script src="../shared/k12.js"></script>
-<script src="../shared/semester.js"></script>
-<script src="../shared/store.js"></script>
-<script src="../shared/ui.js"></script>
-<script src="../shared/hub.js"></script>
-<script src="../shared/api.js"></script>
-<script src="../shared/pyrunner.js"></script>
-<script src="content/python.js"></script>
-<link rel="stylesheet" href="../shared/pyapp.css">
-<script src="../shared/refpanel.js"></script>
-<script src="../shared/pyapp.js"></script>
-</head>
-<body>
-<main class="wrap-wide">
-  <header id="topbar"></header>
-  <div id="pyapp"></div>
-</main>
-<script>
-PYAPP.mount({
-  root: '#pyapp', levels: PY_LEVELS, mod: 'python',
-  title: '🐍 進入 Python 的世界', kicker: '單元二 · 3上 第 2 章 · 畢旅籌備處',
-  subtitle: '單元二 · 課本第 2 章「進入 Python 的世界」 · 故事：九年級畢旅籌備處',
-  finale: '單元二全部完成，回闖關地圖看看你的稱號吧。',
-  ref: 'pyref.html'
-});
-</script>
-</body>
-</html>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Python 冒險島</title>
+<link rel="stylesheet" href="../shared/theme.css"><link rel="stylesheet" href="python-adventure.css"><script src="config.js"></script><script src="../shared/pyrunner.js"></script></head><body>
+<main class="adv-wrap"><header class="hero"><div><div class="eyebrow">單元二 · Python 冒險島</div><h1>🐍 收集星星，練成程式魔法！</h1><p>每次只學一小步。先看任務、修改程式、執行看看，再挑戰星星。</p></div><div class="starbox"><span id="starTotal">⭐ 0</span><small>我的冒險星星</small></div></header>
+<section class="notice">🌱 <b>冒險方式：</b>從新手村開始，一路走到魔王城。卡住時先看提示，不用急著一次寫完。</section>
+<div id="worldMap" class="world-map"></div>
+<section id="lab" class="lab"><div class="lab-head"><div><span id="taskWorld" class="pill"></span><h2 id="taskTitle"></h2><p id="taskGoal"></p></div><div class="task-stars" id="taskStars">☆☆☆</div></div>
+<div class="lab-grid"><div><h3>🧩 程式工作台</h3><textarea id="code" spellcheck="false"></textarea><div class="actions"><button id="runBtn">▶ 執行看看</button><button id="checkBtn" class="primary">⭐ 挑戰星星</button><button id="resetBtn" class="ghost">↺ 重設</button></div><div id="status" class="status">Python 小精靈準備中…</div></div>
+<div><h3>🖥️ 執行結果</h3><pre id="output">按「執行看看」後，結果會出現在這裡。</pre><details><summary>💡 小提示</summary><div id="hint"></div></details><div id="feedback" class="feedback"></div></div></div></section>
+<section class="original"><div><div class="eyebrow">完成核心冒險後</div><h2>🎒 原版畢旅實戰 P1～P10</h2><p>核心能力練熟後，回到原版完整小程式：報名表、旅費分攤、BMI、購票機、倒數、密碼鎖、猜數字魔王關。</p></div><a class="biglink" href="python-original.html">前往原版實戰 →</a></section>
+<section class="explore"><h2>🧪 自由探索基地</h2><p>試玩原版程式 → 看懂它 → 改文字／數字／規則 → 加一個功能 → 做出自己的版本。作品不是終點，改造才是程式設計真正開始的地方。</p></section>
+<footer><a href="hub.html">← 回闖關地圖</a>　<a href="python-guided-teacher.html">教師預覽入口</a></footer></main><script src="content/python-adventure.js"></script></body></html>

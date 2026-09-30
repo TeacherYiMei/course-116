@@ -28,3 +28,10 @@
 
 ## 目前資料
 目前仍以 localStorage 為主，尚未接 Firebase。
+
+
+## v6 Python 冒險島
+- 學生入口：`11601/python.html`
+- 原版 P1～P10：`11601/python-original.html`
+- 新增樣式：`11601/python-adventure.css`
+- 新增核心任務：`11601/content/python-adventure.js`
