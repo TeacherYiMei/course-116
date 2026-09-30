@@ -1,54 +1,31 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Python 畢旅冒險｜資訊科技闖關</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python 畢旅冒險｜逐步闖關</title>
 <link rel="stylesheet" href="python-journey.css">
 </head>
 <body>
 <header class="hero">
-  <a class="back" href="hub.html">← 回 116-1</a>
-  <div class="hero-inner">
-    <div class="mascot">🐍</div>
-    <div>
-      <p class="eyebrow">PYTHON JOURNEY</p>
-      <h1>Python 畢旅冒險</h1>
-      <p>從第一句話出發，一關一關把程式能力帶上旅程。</p>
-    </div>
-    <div class="star-box">⭐ <b id="totalStars">0</b> / 30</div>
-  </div>
+<a class="back" href="hub.html">← 回 116-1</a>
+<div class="hero-inner">
+ <div class="mascot">🐍</div><div><p class="eyebrow">PYTHON JOURNEY</p><h1>Python 畢旅冒險</h1>
+ <p>完成眼前的小任務，下一步才會解鎖。一步一步走到魔王關！</p></div>
+ <div class="star-box">⭐ <b id="totalStars">0</b> / 30</div>
+</div>
 </header>
-
 <main>
-<section class="route-head">
-  <div>
-    <h2>🗺️ 冒險路線</h2>
-    <p>每一關都從原本的旅程情境繼續前進；先看懂、動手改、執行，再完成小挑戰。</p>
-  </div>
-  <button id="resetProgress" class="ghost">重新開始冒險</button>
-</section>
-
+<section class="route-head"><div><h2>🗺️ 冒險路線</h2><p>🔓 表示可以挑戰；🔒 完成前一步就會打開。已過關的任務可以隨時重玩。</p></div>
+<div class="teacher-tools"><a class="teacher-link" href="python.html?teacher=1">👩‍🏫 教師預覽</a><button id="resetProgress" class="ghost">重新開始冒險</button></div></section>
+<div id="teacherBanner" class="teacher-banner" hidden>👩‍🏫 <b>教師預覽模式</b>：全部關卡與小任務均已開放；此模式不改變學生進度。 <a href="python.html">回學生模式</a></div>
 <section id="journeyMap" class="journey-map"></section>
-
-<section class="creation-zone">
-  <span class="flag">🏁 完成十關之後</span>
-  <h2>✨ 我的程式改造基地</h2>
-  <p>挑一個你最喜歡的旅程程式，改變角色、數字或規則，再加入一個自己的新功能。</p>
-  <div class="creation-grid">
-    <article><b>🔧 改造</b><span>換文字、數字、角色或判斷規則</span></article>
-    <article><b>🧩 加料</b><span>多一個 input、提示、條件或迴圈</span></article>
-    <article><b>🚀 自創</b><span>用學過的能力做自己的小程式</span></article>
-  </div>
+<section id="creationZone" class="creation-zone locked-zone">
+ <span class="flag">🔒 最後的秘密基地</span><h2>✨ 我的程式改造基地</h2>
+ <p id="creationText">完成第 10 關後解鎖。到時候可以挑一個喜歡的程式，改造、加料，再做自己的版本。</p>
+ <div class="creation-grid"><article><b>🔧 改造</b><span>換角色、文字、數字或規則</span></article><article><b>🧩 加料</b><span>加入新的輸入、條件或迴圈</span></article><article><b>🚀 自創</b><span>完成自己的小程式</span></article></div>
 </section>
 </main>
-
-<dialog id="missionDialog">
-  <button class="close" id="closeDialog" aria-label="關閉">×</button>
-  <div id="missionBody"></div>
-</dialog>
-
+<dialog id="missionDialog"><button class="close" id="closeDialog">×</button><div id="missionBody"></div></dialog>
 <script src="../shared/pyrunner.js"></script>
 <script src="content/python-journey.js"></script>
-</body>
-</html>
+</body></html>
