@@ -35,3 +35,7 @@
 - 原版 P1～P10：`11601/python-original.html`
 - 新增樣式：`11601/python-adventure.css`
 - 新增核心任務：`11601/content/python-adventure.js`
+
+
+## v7 Python 單一路線
+學生 Python 課程已改為 P1～P10 連續闖關，新增鷹架直接融入原關卡，不再另設「原版實戰」區。
