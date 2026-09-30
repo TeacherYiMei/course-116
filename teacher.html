@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教師教學中心｜116學年度資訊科技</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<style>
+.teacher-wrap{max-width:1050px}.teacher-hero{margin:1.5rem 0;padding:1.6rem;border:2px solid var(--u1-line);border-radius:1.2rem;background:var(--u1-bg)}
+.teacher-hero h1{font-size:clamp(1.9rem,4vw,2.8rem);margin:.2rem 0 .7rem}.teacher-hero p{line-height:1.8}.teacher-note{padding:.9rem 1rem;border-left:5px solid var(--u1);background:#fff;border-radius:.6rem;line-height:1.7}
+.teacher-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.teacher-card{display:block;padding:1.25rem;border:1px solid var(--line);border-radius:1rem;background:#fff;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:.15s}.teacher-card:hover{transform:translateY(-2px)}.teacher-icon{font-size:2.2rem}.teacher-card h2{margin:.4rem 0}.teacher-card p{line-height:1.7;color:var(--ink-soft)}.teacher-card .tag{display:inline-block;padding:.35rem .6rem;border-radius:999px;background:#f8fafc;border:1px solid var(--line);font-size:.78rem;font-weight:900}.teacher-foot{margin-top:1rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:#fff;line-height:1.8}
+@media(max-width:720px){.teacher-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap teacher-wrap">
+  <header style="padding:.8rem 0"><a href="index.html?stay">← 回課程入口</a></header>
+  <section class="teacher-hero">
+    <p class="kicker">👩‍🏫 Teacher Mode｜不接資料庫</p>
+    <h1>資訊科技教師教學中心</h1>
+    <p>先用完整可預覽的教學網頁備課。所有後續關卡內容都先開放給教師查看；學生版之後再依同一套內容加入「學習 → 操作 → 檢查 → 完成」的引導與進度。</p>
+    <div class="teacher-note"><b>目前版本：</b>Python 已拆成 24 個階梯題；AI 旅拍為 7 關專題，最終影片 ≤ 5 分鐘、每段原始素材 ≤ 3 分鐘。完成狀態目前只存瀏覽器，不連 Firebase。</div>
+  </section>
+  <section class="teacher-grid">
+    <a class="teacher-card" href="11601/python-guided-teacher.html">
+      <span class="teacher-icon">🐍</span><span class="tag">116-1｜24 題全部開放</span>
+      <h2>Python 引導式教學</h2>
+      <p>從 print → 變數 → input → int/float → BMI → ///% → if/elif/else → while → random → 綜合挑戰。每題只增加一個主要概念。</p>
+    </a>
+    <a class="teacher-card" href="11602/travel-teacher.html">
+      <span class="teacher-icon">🎬</span><span class="tag">116-2｜7 關全部開放</span>
+      <h2>AI 旅拍影片專題</h2>
+      <p>企劃 → 實拍 → AI 編劇 → AI 素材 → 剪輯 → AI 審片 → 發表。最終作品 ≤ 5 分鐘，從真實素材逐步完成。</p>
+    </a>
+  <a class="teacher-card" href="teacher-score-settings.html"><span class="teacher-icon">⭐</span><span class="tag">教師幕後設定｜學生端不顯示</span><h2>本學期授課單元</h2><p>勾選本學期實際授課的單元。系統在教師端依這些單元的星星與完成狀況產生學期統計；學生只會看到闖關、星星、徽章與冒險成就。</p></a></section>
+  <section class="teacher-foot">
+    <b>教學設計共通原則</b><br>
+    ① 先理解一個小概念　② 立刻做一個小任務　③ 預測／測試　④ 找錯與修正　⑤ 留下本關產出　⑥ 再進入下一個概念。<br>
+    <span class="soft">這一版先以本機儲存方便試教；確認內容後，再一起建立你的獨立資料庫。</span>
+  </section>
+</main>
+</body>
+</html>
