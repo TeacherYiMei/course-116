@@ -2,30 +2,65 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Python 畢旅冒險｜逐步闖關</title>
+<title>Python 畢旅冒險｜任務模式</title>
 <link rel="stylesheet" href="python-journey.css">
 </head>
 <body>
-<header class="hero">
-<a class="back" href="hub.html">← 回 116-1</a>
-<div class="hero-inner">
- <div class="mascot">🐍</div><div><p class="eyebrow">PYTHON JOURNEY</p><h1>Python 畢旅冒險</h1>
- <p>完成眼前的小任務，下一步才會解鎖。一步一步走到魔王關！</p></div>
- <div class="star-box">⭐ <b id="totalStars">0</b> / 30</div>
-</div>
+<header class="gamebar">
+  <a class="homebtn" href="hub.html">← 冒險大廳</a>
+  <div class="game-title">🐍 Python 畢旅冒險</div>
+  <div class="energy">⭐ <b id="starCount">0</b><span>/30</span></div>
 </header>
-<main>
-<section class="route-head"><div><h2>🗺️ 冒險路線</h2><p>🔓 表示可以挑戰；🔒 完成前一步就會打開。已過關的任務可以隨時重玩。</p></div>
-<div class="teacher-tools"><a class="teacher-link" href="python.html?teacher=1">👩‍🏫 教師預覽</a><button id="resetProgress" class="ghost">重新開始冒險</button></div></section>
-<div id="teacherBanner" class="teacher-banner" hidden>👩‍🏫 <b>教師預覽模式</b>：全部關卡與小任務均已開放；此模式不改變學生進度。 <a href="python.html">回學生模式</a></div>
-<section id="journeyMap" class="journey-map"></section>
-<section id="creationZone" class="creation-zone locked-zone">
- <span class="flag">🔒 最後的秘密基地</span><h2>✨ 我的程式改造基地</h2>
- <p id="creationText">完成第 10 關後解鎖。到時候可以挑一個喜歡的程式，改造、加料，再做自己的版本。</p>
- <div class="creation-grid"><article><b>🔧 改造</b><span>換角色、文字、數字或規則</span></article><article><b>🧩 加料</b><span>加入新的輸入、條件或迴圈</span></article><article><b>🚀 自創</b><span>完成自己的小程式</span></article></div>
-</section>
+
+<main class="game-shell">
+  <section id="teacherPanel" class="teacher-panel" hidden>
+    <div><b>👩‍🏫 教師預覽</b><span> 可直接查看任一挑戰，不改變學生進度。</span></div>
+    <select id="teacherJump"></select>
+    <a href="python.html">回學生模式</a>
+  </section>
+
+  <section class="mini-map" aria-label="冒險進度">
+    <div class="map-caption"><span id="mapMessage">下一站正在等你！</span><button id="showMapBtn" class="textbtn">🗺️ 看冒險地圖</button></div>
+    <div id="miniNodes" class="mini-nodes"></div>
+  </section>
+
+  <section id="missionScreen" class="mission-screen"></section>
 </main>
-<dialog id="missionDialog"><button class="close" id="closeDialog">×</button><div id="missionBody"></div></dialog>
+
+<dialog id="mapDialog" class="map-dialog">
+  <button class="xbtn" id="closeMap">×</button>
+  <h2>🗺️ Python 畢旅冒險地圖</h2>
+  <p>走過的地方會留下 ⭐；前方的區域仍藏在雲霧裡。</p>
+  <div id="fullMap" class="full-map"></div>
+</dialog>
+
+<dialog id="rewardDialog" class="reward-dialog">
+  <div id="rewardBody"></div>
+</dialog>
+
+<dialog id="certificateDialog" class="certificate-dialog">
+  <button class="xbtn no-print" id="closeCertificate">×</button>
+  <div class="certificate" id="certificate">
+    <div class="cert-stars">⭐ 🐍 ⭐</div>
+    <p class="cert-kicker">PYTHON JOURNEY</p>
+    <h1>Python 畢旅冒險完成證書</h1>
+    <p class="cert-intro">恭喜</p>
+    <div class="student-name" id="certName">Python 冒險家</div>
+    <p>完成 Python 畢旅冒險全部任務，展現持續挑戰、修改程式與解決問題的能力。</p>
+    <div class="skill-badges">
+      <span>print</span><span>變數</span><span>input</span><span>運算</span>
+      <span>條件判斷</span><span>and / or</span><span>for</span><span>while</span><span>綜合應用</span>
+    </div>
+    <div class="cert-result">完成 10 個冒險關卡　⭐ 30 顆星</div>
+    <div class="cert-foot"><span id="certDate"></span><span>🏅 Python 冒險家</span></div>
+  </div>
+  <div class="cert-actions no-print">
+    <label>證書姓名 <input id="studentName" maxlength="20" placeholder="輸入姓名"></label>
+    <button id="applyName">套用姓名</button><button id="printCertificate">🖨️ 列印／存成 PDF</button>
+  </div>
+</dialog>
+
+<script src="config.js"></script>
 <script src="../shared/pyrunner.js"></script>
 <script src="content/python-journey.js"></script>
 </body></html>
