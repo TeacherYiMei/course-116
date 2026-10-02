@@ -241,9 +241,3 @@ table.t th{background:var(--soft);font-weight:800}
 .k12{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;font-size:.75rem;font-weight:800;color:var(--ink-soft)}
 .k12-c{border:1px solid var(--line);border-radius:999px;padding:.1rem .5rem;background:#fff;color:#334155}
 .k12-c small{font-weight:700;color:var(--ink-soft)}
-
-/* v5 學生冒險視覺：前台只呈現闖關、星星與成就 */
-body{background-image:radial-gradient(circle at 12% 10%,rgba(255,224,138,.22) 0 70px,transparent 72px),radial-gradient(circle at 88% 18%,rgba(186,230,253,.28) 0 90px,transparent 92px)}
-.card.pop{border-radius:22px;transition:transform .18s ease,box-shadow .18s ease}.card.pop:hover{transform:translateY(-5px) rotate(-.25deg);box-shadow:0 14px 32px rgba(15,23,42,.12)}
-.card.pop h2{letter-spacing:.02em}.chip{border-radius:999px}.bar{border-radius:999px;overflow:hidden}.bar i{border-radius:999px}
-@media (prefers-reduced-motion:no-preference){.card.pop>div:first-child+div>div:first-child{animation:v5bob 2.6s ease-in-out infinite}@keyframes v5bob{50%{transform:translateY(-4px) rotate(2deg)}}}

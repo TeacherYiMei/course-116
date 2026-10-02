@@ -11,14 +11,32 @@
   var C = window.CONFIG, esc = UI.esc;
 
   // 一個單元可以包好幾個部分（parts，例如單元六：資料偵探＋試算表＋密碼特務），進度就把各部分加起來
-  function modStars(m) { return m.parts ? m.parts.reduce(function (a, p) { return a + STORE.partStars(p); }, 0) : STORE.moduleStars(m.id); }
-  function modDone(m) { return m.parts ? m.parts.reduce(function (a, p) { return a + STORE.partDone(p); }, 0) : STORE.moduleDone(m.id); }
+  function pythonJourneyProgress() {
+    try {
+      var s = JSON.parse(localStorage.getItem('course115_v3_progress') || '{}');
+      var need = {p1:2,p2:3,p3:3,p4:2,p5:3,p6:2,p7:2,p8:3,p9:3,p10:3};
+      var stars = 0, done = 0;
+      Object.keys(need).forEach(function (id) {
+        var n = Math.max(0, Math.min(need[id], +(s[id] || 0)));
+        stars += n;
+        if (n >= need[id]) done++;
+      });
+      return { stars: stars, done: done, state: s, need: need };
+    } catch (e) { return { stars:0, done:0, state:{}, need:{} }; }
+  }
+  function modStars(m) {
+    if (m.id === 'python') return Math.max(STORE.moduleStars('python'), pythonJourneyProgress().stars);
+    return m.parts ? m.parts.reduce(function (a, p) { return a + STORE.partStars(p); }, 0) : STORE.moduleStars(m.id);
+  }
+  function modDone(m) {
+    if (m.id === 'python') return Math.max(STORE.moduleDone('python'), pythonJourneyProgress().done);
+    return m.parts ? m.parts.reduce(function (a, p) { return a + STORE.partDone(p); }, 0) : STORE.moduleDone(m.id);
+  }
 
   // 平均完成度：每個計星單元各自算完成 %，再平均（每個單元份量一樣；maxStars 是 0 的不算。5016B 從 2026-09-28 起計星，也算進來）
   function pctOf(m) { return m.maxStars ? Math.min(1, modStars(m) / m.maxStars) : 0; }
   function avgPct(mods) {
-    var chosen = STORE.scoreUnits ? STORE.scoreUnits() : null;
-    var S = mods.filter(function (m) { return m.maxStars && !m.soon && (!chosen || chosen.indexOf(m.id) >= 0); });
+    var S = mods.filter(function (m) { return m.maxStars && !m.soon; });
     return S.length ? Math.floor(S.reduce(function (a, m) { return a + pctOf(m); }, 0) / S.length * 100) : 0;
   }
 
@@ -32,7 +50,17 @@
     }
     return null;
   }
-  function recOf(id) { var m = modOfLevel(id); return m ? STORE.level(m, id) : null; }
+  function recOf(id) {
+    var m = modOfLevel(id);
+    if (!m) return null;
+    if (m === 'python' && /^P\d+$/.test(id)) {
+      var pj = pythonJourneyProgress(), key = id.toLowerCase(), n = +(pj.state[key] || 0), max = pj.need[key] || 0;
+      var legacy = STORE.level('python', id);
+      if (legacy && +(legacy.stars || 0) > n) return legacy;
+      return n ? { stars:n, done:max>0 && n>=max } : legacy;
+    }
+    return STORE.level(m, id);
+  }
   function passed(id) { var r = recOf(id); return !!(r && ((r.stars || 0) > 0 || r.done)); }
   function today() {   // ?today=2028-03-01 可以預覽某一天（老師備課、測試用）
     var q = (location.search.match(/[?&]today=(\d{4}-\d{2}-\d{2})/) || [])[1];
@@ -122,8 +150,6 @@
     var total = 0, max = 0;
     mods.forEach(function (m) { total += modStars(m); max += m.maxStars; });
     var avg = avgPct(mods), rk = rankOf(avg);
-    var chosen = STORE.scoreUnits ? STORE.scoreUnits() : null;
-    var scoredMods = mods.filter(function(m){ return m.maxStars && !m.soon && (!chosen || chosen.indexOf(m.id)>=0); });
     var toNext = rk.next ? (rk.next[0] - avg) : 0;
     var nextMod = mods.filter(function (m) { return !m.soon && modDone(m) < m.levels.length; })[0];
 
@@ -135,10 +161,10 @@
       (p ? '<p class="soft bold mt1">' + esc(p.name) + '，歡迎回來！</p>' : '') + '</div>' +
       '<div class="center" style="min-width:12rem">' +
       '<div class="black" style="font-size:1.35rem">' + esc(rk.cur[1]) + '</div>' +
-      '<div class="small soft bold">✨ 冒險能量 <span class="black" id="avg-pct" style="color:var(--star-ink);font-size:1.2rem">' + avg + '%</span></div>' +
+      '<div class="small soft bold">平均完成度 <span class="black" id="avg-pct" style="color:var(--star-ink);font-size:1.2rem">' + avg + '%</span></div>' +
       '<div class="bar mt1"><i style="width:' + avg + '%"></i></div>' +
-      '<div class="tiny soft mt1">⭐ 總星數 ' + total + ' / ' + max + ' · ' + (rk.next ? '再累積 ' + toNext + '% 冒險能量可升級為 ' + esc(rk.next[1]) : '已達最高稱號！') + '</div>' +
-      '<div class="tiny faint">完成任務、收集星星，解鎖你的冒險稱號！</div>' +
+      '<div class="tiny soft mt1">⭐ 總星數 ' + total + ' / ' + max + ' · ' + (rk.next ? '平均再 ' + toNext + '% 升級為 ' + esc(rk.next[1]) : '已達最高稱號！') + '</div>' +
+      '<div class="tiny faint">每個單元各算完成 %，再取平均</div>' +
       '</div></div>' +
       (nextMod ? '<div class="note mt2 small"><b>下一步建議：</b>單元' + esc(nextMod.no) + '「' + esc(nextMod.title) + '」—— <a href="' + esc(nextMod.href) + '" class="bold">前往 →</a></div>' : '<div class="note ok mt2 small"><b>全部完成！</b>去 5016B 做一個自己的專題吧。</div>') +
       openAllBanner() + backupNote(total) +
@@ -148,7 +174,6 @@
       var s = modStars(m), d = modDone(m), n = m.levels.length;
       var pct = m.maxStars ? Math.round(s / m.maxStars * 100) : Math.round(d / n * 100);
       var status = m.soon ? '🚧 規劃中' : (d >= n ? '✅ 完成' : (d > 0 ? '進行中' : '尚未開始'));
-      var inScore = !chosen || chosen.indexOf(m.id) >= 0;
       var tag = m.soon ? 'div' : 'a';
       return '<' + tag + ' class="card pop" ' + (m.soon ? 'aria-disabled="true"' : 'href="' + esc(m.href) + '"') + ' style="' + (m.soon ? 'opacity:.7;' : '') + 'text-decoration:none;animation-delay:' + (i * 60) + 'ms;border-top:6px solid var(--' + m.color + ')">' +
         '<div class="row between"><span class="chip" style="background:var(--' + m.color + '-bg);border-color:transparent;color:var(--' + m.color + ')">' +
@@ -157,7 +182,7 @@
         '<div><h2 style="font-size:1.25rem" class="black">' + esc(m.title) + '</h2><p class="small soft bold">' + esc(m.sub) + '</p></div></div>' +
         '<p class="small mt1">' + esc(m.desc) + '</p>' +
         '<div class="mt2 row between small bold">' +
-        (m.maxStars ? '<span>⭐ ' + s + ' / ' + m.maxStars + ' · <span class="upct">' + pct + '%</span></span>' : '<span>🎈 探索任務</span>') +
+        (m.maxStars ? '<span>⭐ ' + s + ' / ' + m.maxStars + ' · <span class="upct">' + pct + '%</span></span>' : '<span>不計星 · 記錄完成</span>') +
         '<span class="soft">' + d + ' / ' + n + (m.id === 'arduino' ? ' 節' : ' 關') + '</span></div>' +
         '<div class="bar mt1"><i style="width:' + pct + '%;' + (m.maxStars ? '' : 'background:var(--u4)') + '"></i></div>' +
         '</' + tag + '>';

@@ -122,17 +122,6 @@
       return n;
     },
 
-    /** 教師設定：本學期哪些單元列入「學期百分比」。未設定時＝所有可計星單元。 */
-    scoreUnits: function (value) {
-      var k = PREFIX + '-teacher-score-' + term();
-      if (value === undefined) {
-        var a = parse(safeGet(k), null);
-        return Array.isArray(a) ? a : null;
-      }
-      safeSet(k, JSON.stringify(Array.isArray(value) ? value : []));
-      fire(); return value;
-    },
-
     /** 暫存草稿（Python 編輯器用；不算進度） */
     draft: function (key, value) {
       var p = this.me(); if (!p) return null;

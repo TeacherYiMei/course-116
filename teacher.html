@@ -1,44 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>教師教學中心｜116學年度資訊科技</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared/theme.css">
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python 學習進度｜教師端</title>
 <style>
-.teacher-wrap{max-width:1050px}.teacher-hero{margin:1.5rem 0;padding:1.6rem;border:2px solid var(--u1-line);border-radius:1.2rem;background:var(--u1-bg)}
-.teacher-hero h1{font-size:clamp(1.9rem,4vw,2.8rem);margin:.2rem 0 .7rem}.teacher-hero p{line-height:1.8}.teacher-note{padding:.9rem 1rem;border-left:5px solid var(--u1);background:#fff;border-radius:.6rem;line-height:1.7}
-.teacher-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.teacher-card{display:block;padding:1.25rem;border:1px solid var(--line);border-radius:1rem;background:#fff;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:.15s}.teacher-card:hover{transform:translateY(-2px)}.teacher-icon{font-size:2.2rem}.teacher-card h2{margin:.4rem 0}.teacher-card p{line-height:1.7;color:var(--ink-soft)}.teacher-card .tag{display:inline-block;padding:.35rem .6rem;border-radius:999px;background:#f8fafc;border:1px solid var(--line);font-size:.78rem;font-weight:900}.teacher-foot{margin-top:1rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:#fff;line-height:1.8}
-@media(max-width:720px){.teacher-grid{grid-template-columns:1fr}}
-</style>
-</head>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;background:#f4f7fb;color:#24324a}
+header{background:#fff;border-bottom:1px solid #e2e6eb;padding:16px max(18px,calc((100vw - 1180px)/2));display:flex;justify-content:space-between;align-items:center}
+main{max-width:1180px;margin:auto;padding:20px}.card{background:white;border-radius:18px;padding:20px;box-shadow:0 8px 28px #34475b10;margin-bottom:16px}
+.login{max-width:480px;margin:50px auto}.field{display:block;margin:12px 0}.field input{width:100%;padding:11px;border:1px solid #ccd4de;border-radius:10px}
+button,select{font:inherit}button{border:0;border-radius:11px;padding:10px 14px;font-weight:900;cursor:pointer}.primary{background:#4f59c7;color:white}.soft{background:#e9ecf2;color:#475466}.export{background:#e4f7eb;color:#267148}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar select{padding:9px 12px;border:1px solid #ccd4de;border-radius:10px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.metric{background:#f7f8fb;border-radius:14px;padding:14px}.metric b{display:block;font-size:25px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e8ebef;text-align:left;font-size:14px}th{background:#f7f8fb;position:sticky;top:0}.tableWrap{overflow:auto;max-height:65vh}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef1f5}.done{background:#e4f7eb;color:#267148}.hidden{display:none!important}.error{color:#b43b3b;font-weight:800}.status{font-size:13px;color:#687385}
+.manageBtn{background:#eef1f5;color:#364152;padding:7px 10px;white-space:nowrap}
+dialog.manageDialog{width:min(720px,calc(100% - 28px));border:0;border-radius:18px;padding:0;box-shadow:0 20px 60px #21304735}
+dialog.manageDialog::backdrop{background:#22314a80}
+.manageHead{padding:18px 20px;border-bottom:1px solid #e8ebef}.manageBody{padding:18px 20px}.recordList{display:grid;gap:10px;margin:14px 0}
+.recordCard{display:flex;justify-content:space-between;gap:14px;align-items:center;border:1px solid #e2e6eb;border-radius:14px;padding:13px}
+.recordInfo{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;min-width:0}.danger{background:#fdebec;color:#a12f35}
+.manageFooter{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 20px 18px}.warn{color:#9a5b19;font-size:13px}
+@media(max-width:700px){.recordCard{align-items:stretch;flex-direction:column}.deleteRecordBtn{width:100%}}
+@media(max-width:700px){.summary{grid-template-columns:repeat(2,1fr)}}
+</style></head>
 <body>
-<main class="wrap teacher-wrap">
-  <header style="padding:.8rem 0"><a href="index.html?stay">← 回課程入口</a></header>
-  <section class="teacher-hero">
-    <p class="kicker">👩‍🏫 Teacher Mode｜不接資料庫</p>
-    <h1>資訊科技教師教學中心</h1>
-    <p>先用完整可預覽的教學網頁備課。所有後續關卡內容都先開放給教師查看；學生版之後再依同一套內容加入「學習 → 操作 → 檢查 → 完成」的引導與進度。</p>
-    <div class="teacher-note"><b>目前版本：</b>Python 已拆成 24 個階梯題；AI 旅拍為 7 關專題，最終影片 ≤ 5 分鐘、每段原始素材 ≤ 3 分鐘。完成狀態目前只存瀏覽器，不連 Firebase。</div>
-  </section>
-  <section class="teacher-grid">
-    <a class="teacher-card" href="11601/python-guided-teacher.html">
-      <span class="teacher-icon">🐍</span><span class="tag">116-1｜24 題全部開放</span>
-      <h2>Python 引導式教學</h2>
-      <p>從 print → 變數 → input → int/float → BMI → ///% → if/elif/else → while → random → 綜合挑戰。每題只增加一個主要概念。</p>
-    </a>
-    <a class="teacher-card" href="11602/travel-teacher.html">
-      <span class="teacher-icon">🎬</span><span class="tag">116-2｜7 關全部開放</span>
-      <h2>AI 旅拍影片專題</h2>
-      <p>企劃 → 實拍 → AI 編劇 → AI 素材 → 剪輯 → AI 審片 → 發表。最終作品 ≤ 5 分鐘，從真實素材逐步完成。</p>
-    </a>
-  <a class="teacher-card" href="teacher-score-settings.html"><span class="teacher-icon">⭐</span><span class="tag">教師幕後設定｜學生端不顯示</span><h2>本學期授課單元</h2><p>勾選本學期實際授課的單元。系統在教師端依這些單元的星星與完成狀況產生學期統計；學生只會看到闖關、星星、徽章與冒險成就。</p></a></section>
-  <section class="teacher-foot">
-    <b>教學設計共通原則</b><br>
-    ① 先理解一個小概念　② 立刻做一個小任務　③ 預測／測試　④ 找錯與修正　⑤ 留下本關產出　⑥ 再進入下一個概念。<br>
-    <span class="soft">這一版先以本機儲存方便試教；確認內容後，再一起建立你的獨立資料庫。</span>
-  </section>
-</main>
-<p style="text-align:center;margin:18px"><a href="11601/python.html?teacher=1" style="display:inline-block;padding:10px 16px;border-radius:12px;background:#675fd5;color:white;text-decoration:none;font-weight:700">🐍 Python 全關卡教師預覽</a></p></body>
-</html>
+<header><div><b>👩‍🏫 Python 學習進度｜教師端</b><div class="status">教師端與學生闖關頁分離</div><div id="teacherIdentity" class="status"></div></div><button id="logoutBtn" class="soft hidden">登出</button></header>
+<main>
+<section id="loginCard" class="card login">
+<h1>教師登入</h1><p>請使用 Firebase Authentication 中建立的教師帳號。</p>
+<label class="field">Email<input id="email" type="email"></label>
+<label class="field">密碼<input id="password" type="password"></label>
+<div id="loginError" class="error"></div><button id="loginBtn" class="primary">登入教師端</button>
+</section>
+<section id="dashboard" class="hidden">
+<div class="card">
+<div class="toolbar"><b>授權班級：</b><select id="classFilter"><option value="">全部班級</option></select>
+<button id="refreshBtn" class="soft">重新整理</button><button id="exportBtn" class="export">📗 下載此班 Excel</button><span id="dbStatus" class="status"></span></div>
+<div class="summary"><div class="metric">學生人數<b id="studentCount">0</b></div><div class="metric">平均星星<b id="avgStars">0</b></div><div class="metric">平均評分<b id="avgScore">0</b></div><div class="metric">完成人數<b id="doneCount">0</b></div></div>
+</div>
+<div class="card tableWrap"><table><thead><tr><th>班級</th><th>座號</th><th>姓名</th><th>星星</th><th>評分</th><th>目前進度</th><th>完成</th><th>最近更新</th><th>紀錄</th><th>維護</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section></main>
+
+<dialog id="studentManageDialog" class="manageDialog">
+  <div class="manageHead">
+    <h2 style="margin:0 0 6px">🛠️ 學生資料維護</h2>
+    <div id="manageStudentTitle"></div>
+  </div>
+  <div class="manageBody">
+    <p id="manageStudentNote" class="status"></p>
+    <div class="warn">⚠️ 請只刪除確認輸入錯誤或重複的紀錄。刪除 Firestore 學習紀錄不會自動刪除 Firebase Authentication 的登入帳號。</div>
+    <div id="manageRecordList" class="recordList"></div>
+  </div>
+  <div class="manageFooter">
+    <span id="manageDeleteStatus" class="status"></span>
+    <button id="closeManageBtn" class="soft" type="button">關閉</button>
+  </div>
+</dialog>
+<script src="shared/firebase-config.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="shared/teacher-dashboard.js"></script>
+</body></html>

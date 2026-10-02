@@ -43,7 +43,7 @@
 | 🐍 Python 畢旅籌備處（和闖關網站分開，給其他老師和他們的學生） | [pylab/README.md](pylab/README.md)　學生：`/pylab/`　老師試用、回報：`/pylab/teacher.html` |
 | 108 課綱對照（每一關的學習內容、學習表現代碼） | [docs/06_課綱對照.md](docs/06_課綱對照.md) |
 
-## ⚠️ 目前是「可運作骨架」（本機版）
+## ⚠️ 目前狀態：完整課程可運作；Python 已接 Firebase，其他單元仍沿用原本 STORE
 
 進度存在瀏覽器的 localStorage，登入只填班級／座號／姓名。**可以直接上課試用**，但：
 
@@ -108,3 +108,23 @@ npm run quick     ← 快速：洩漏掃描、伺服器驗證、亂猜模擬、�
 
 同 course_115：**CC BY-NC-SA 4.0**。翰林課本內容不在授權範圍內（註解裡的頁碼只是備課對照）。
 單元一的互動頁面來自 byte-core-su/unforte_114。
+
+
+## 🐍 Python 模組整合版（本專案 v12）
+- 已以 `course115-1 Python v11.2` 完整取代原本 `11601/python.html` 與舊 Python 闖關內容。
+- 保留 course_116 其他單元：數位時代、系統平臺、5016B、多媒體、網路世界、進階資料處理、課堂挑戰與總複習。
+- Python 共 10 關、26 挑戰，學生可「執行看看」與「檢查挑戰」分開操作。
+- 支援 input() 頁面內互動輸入、中文除錯、情境內容合理性檢查、90 秒輸入等待保護。
+- Python 學生資料與進度可同步 Firebase；教師端：`/teacher.html`。
+- 多教師可依 `teachers/{uid}.classes` 只查看授權班級；admin 可查看全部班級。
+- Python 進度會同步回 116-1 闖關地圖；舊版 Python localStorage 進度也會被地圖讀取。
+- Firestore 規則與設定說明見根目錄 `firestore.rules` 與 `FIREBASE_SETUP.md`。
+
+
+## v13：教師學生資料維護
+- 教師端新增「🛠️ 維護」欄。
+- 任課教師可刪除自己 `classes` 授權班級中的錯誤學生 Firestore 紀錄。
+- `admin` 可維護全部班級。
+- 同班同座號若有多筆歷史紀錄，維護視窗會列出每一筆原始紀錄，可單獨刪除，不會把合併後的正確進度整組誤刪。
+- Firestore Security Rules 同步限制刪除權限，不只靠前端按鈕。
+- 刪除的是學生學習紀錄；Firebase Authentication 登入帳號不會由瀏覽器教師端自動刪除。

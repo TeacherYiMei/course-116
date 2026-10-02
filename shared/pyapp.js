@@ -25,14 +25,7 @@ window.PYAPP = { mount: function (opts) {
     if (s === 'ready') { eng.className = 'engine ok'; eng.textContent = '✅ Python ' + info + ' 就緒'; setBusy(false); }
     if (s === 'fail') { eng.className = 'engine bad'; eng.textContent = '❌ 引擎載入失敗：請檢查網路後重新整理'; }
   });
-  if (location.protocol === 'file:') {
-    eng.className = 'engine bad';
-    eng.innerHTML = '⚠️ Python 不能用「直接雙擊 HTML」啟動。請從本機網站伺服器或 GitHub Pages 開啟。';
-    setBusy(false);
-  } else {
-    try { PYRUN.init(CONFIG.PYODIDE_URL).catch(function () {}); }
-    catch (e) { eng.className = 'engine bad'; eng.textContent = '❌ Python 引擎無法啟動：' + (e.message || '請改用網站方式開啟'); setBusy(false); }
-  }
+  PYRUN.init(CONFIG.PYODIDE_URL).catch(function () {});
 
   /* ── 📚 語法小抄：同一頁的浮動視窗（shared/refpanel.js）── */
   if (opts.ref && window.REFPANEL) REFPANEL.bind(root, { url: opts.ref, title: '📚 語法小抄' });
