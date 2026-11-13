@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python 學習冒險｜教師歷史成績核對</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;background:#f4f7fb;color:#24324a}
+header{background:#fff;border-bottom:1px solid #e2e6eb;padding:16px max(18px,calc((100vw - 1280px)/2));display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+main{max-width:1280px;margin:auto;padding:20px}
+.card{background:white;border-radius:18px;padding:20px;box-shadow:0 8px 28px #34475b10;margin-bottom:16px}
+.login{max-width:480px;margin:50px auto}
+.field{display:block;margin:12px 0}.field input{width:100%;padding:11px;border:1px solid #ccd4de;border-radius:10px}
+button,select{font:inherit}
+button{border:0;border-radius:11px;padding:10px 14px;font-weight:900;cursor:pointer}
+.primary{background:#4f59c7;color:white}.soft{background:#e9ecf2;color:#475466}
+.back{display:inline-flex;align-items:center;text-decoration:none;background:#e9ecf2;color:#475466;border-radius:11px;padding:10px 14px;font-weight:900}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.toolbar select{padding:9px 12px;border:1px solid #ccd4de;border-radius:10px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.metric{background:#f7f8fb;border-radius:14px;padding:14px}.metric b{display:block;font-size:25px}
+.tableWrap{overflow:auto;max-height:70vh}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #e8ebef;text-align:left;font-size:14px;vertical-align:top;white-space:nowrap}
+th{background:#f7f8fb;position:sticky;top:0;z-index:2}
+.hidden{display:none!important}.error{color:#b43b3b;font-weight:800}.status{font-size:13px;color:#687385}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef1f5;margin:2px}
+.badge.bad{background:#fdebec;color:#a12f35}.badge.warn{background:#fff3d6;color:#805d0d}.badge.ok{background:#e4f7eb;color:#267148}
+.issueList{white-space:normal;min-width:260px;line-height:1.5}
+.reason{display:block;margin:2px 0}
+.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f5f6f8;padding:2px 5px;border-radius:5px}
+.note{background:#fff8e8;border-radius:14px;padding:13px 15px;line-height:1.6;color:#694f20}
+@media(max-width:800px){.summary{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script src="shared/firebase-config.js?v=15"></script>
+</head>
+<body>
+<header>
+  <div>
+    <b>🔎 Python 學習冒險｜教師歷史成績核對</b>
+    <div class="status">自動比對關卡紀錄、星星、評分與目前位置</div>
+  </div>
+  <a class="back" href="teacher.html">← 回教師端</a>
+</header>
+
+<main>
+<section id="loginCard" class="card login">
+  <h1>教師登入</h1>
+  <p>使用原本教師端 Firebase Authentication 帳號。</p>
+  <label class="field">Email<input id="email" type="email"></label>
+  <label class="field">密碼<input id="password" type="password"></label>
+  <div id="loginError" class="error"></div>
+  <button id="loginBtn" class="primary">登入並檢查</button>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="card">
+    <div class="toolbar">
+      <b id="teacherIdentity">教師</b>
+      <select id="classFilter"><option value="">全部授權班級</option></select>
+      <select id="issueFilter">
+        <option value="issues">只看異常</option>
+        <option value="all">全部學生</option>
+        <option value="stars">只看星星不符</option>
+        <option value="gap">只看跳關</option>
+        <option value="duplicate">只看重複紀錄</option>
+        <option value="history">歷史星數／跨格式差異</option>
+        <option value="priority">優先核對 902 班 28 號</option>
+        <option value="alias910">910 班 30／36 號歷史帳號</option>
+      </select>
+      <button id="refreshBtn" class="soft">重新檢查</button><button id="exportAuditBtn" class="soft" type="button">匯出稽核 CSV</button>
+      <button id="exportSnapshotBtn" class="soft" type="button">下載目前進度備份 JSON</button>
+      <button id="export910AliasBtn" class="soft" type="button">下載 910 班 30／36 號核對檔</button>
+    </div>
+
+    <div class="summary">
+      <div class="metric">原始紀錄<b id="mRecords">0</b></div>
+      <div class="metric">學生數<b id="mStudents">0</b></div>
+      <div class="metric">異常學生<b id="mIssues">0</b></div>
+      <div class="metric">星星不符<b id="mStarMismatch">0</b></div>
+    </div>
+
+    <div class="note">
+      <b>歷史對照與安全恢復準備（v16.62）：</b>比較 Python 舊版 <span class="code">progress.p1～p10</span>、
+      <span class="code">stars</span>，與各版 <span class="code">modules.python</span>、
+      <span class="code">progress._mods.python</span>、
+      <span class="code">courseProgress.11601.modules.python</span>。
+      同班同座號（含 1／01）若有多筆 UID，分別列出並提示人工核對。
+      目前資料庫沒有提供不可變的歷史快照，因此「沒有標示異常」不代表從未掉星；
+      若 30 顆已被覆寫成 3 顆且沒有其他紀錄，須由先前備份／原電腦查找。
+      本頁不會寫入、合併或重設學生進度。先保留完整原始資料，再由教師確認身分及證據；CSV 的星數不能直接視為逐關成績。
+    </div>
+    <div class="note" style="margin-top:12px;background:#f1f6ff;color:#254466">
+      <b>歷史檔核對（僅在瀏覽器內運算，不上傳 CSV）：</b>
+      <label for="historyFile">選取較早日期的教師稽核 CSV 或本次 CSV 進行對照：</label>
+      <input id="historyFile" type="file" accept=".csv,text/csv" style="display:block;margin:8px 0">
+      <div id="historyStatus" class="status">尚未載入歷史檔。只有不同日期的真實歷史匯出才能證明「當時星數較高」。</div>
+      <button id="exportComparisonBtn" class="soft" type="button" disabled>匯出差異對照 CSV</button>
+    </div>
+    <div class="note" style="margin-top:12px;background:#eef8f7;color:#17564e">
+      <b>910 班歷史帳號特例（v16.63）：</b>910 班先闖關後建立密碼，30 號曾暫用 36 號。
+      本工具僅從已授權教師可讀取的雲端 UID 顯示兩座號記錄，並提供逐關最高星數的<b>候選</b>核對檔。
+      任何 36 號轉回 30 號或跨 UID 歷史合併，都必須先確認目前可登入的帳號、備份來源與學生身分，<b>不會自動修改帳號、密碼、座號或星星。</b>
+    </div>
+    <div id="dbStatus" class="status" style="margin-top:10px"></div>
+  </div>
+
+  <section id="restore910Panel" class="card hidden">
+    <h2>910 班 30／36 號｜受控成績恢復</h2>
+    <p class="note">此功能僅供管理員或獲授權的 910 班教師操作。30 號曾暫用 36 號，但必須先確認本人、正式可登入 UID，並下載備份。只合併經核對的同姓名記錄，不更改座號／姓名／密碼、不刪除任何 UID；其他學生一律不受影響。</p>
+    <div class="toolbar" style="margin:12px 0">
+      <button id="plan910Btn" type="button" class="soft">重新產生恢復預覽</button>
+      <button id="backup910Btn" type="button" class="soft">① 下載相關 UID 完整備份</button>
+      <button id="proposal910Btn" type="button" class="soft">下載候選逐關恢復方案</button>
+    </div>
+    <div id="restore910Preview" class="status">讀取學生資料後顯示恢復方案。</div>
+    <label class="field">② 請輸入已核對的學生姓名 <input id="restore910Name" type="text" autocomplete="off" placeholder="請輸入學生完整姓名" style="max-width:240px"></label>
+    <label class="field">③ 選擇經確認可登入的 910 班 30 號正式 UID
+      <select id="restore910Target" style="display:block;padding:10px;max-width:100%;margin:6px 0"><option value="">先選擇正式帳號</option></select>
+    </label>
+    <label class="field"><input type="checkbox" id="restore910Identity"> ④ 我已核對此學生本人，確認 36 號為其暫用帳號、正式 UID 與姓名一致</label>
+    <label class="field"><input type="checkbox" id="restore910Backup"> ⑤ 我已下載並妥善保存原始進度備份</label>
+    <label class="field">⑥ 輸入 <b>910-30</b> 確認此次操作 <input id="restore910Confirm" type="text" autocomplete="off" placeholder="910-30" style="max-width:180px"></label>
+    <button id="restore910Apply" class="primary" type="button" disabled>確認並恢復逐關星數（只增不減）</button>
+    <div id="restore910Status" class="status" aria-live="polite" style="margin-top:10px"></div>
+  </section>
+
+  <div class="card tableWrap">
+    <table>
+      <thead>
+        <tr>
+          <th>班級</th><th>座號</th><th>姓名</th>
+          <th>原始 UID（末 6 碼）</th><th>Python 總星</th><th>各來源最高星</th><th>逐關明細</th>
+          <th>來源差異與稽核結果</th><th>更新時間</th><th>安全核對</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <section id="detailPanel" class="card hidden" aria-live="polite">
+    <h2>原始紀錄與安全恢復核對</h2>
+    <p class="status">詳細資料僅供授權教師查看。包含學生進度，下載後請妥善保存，不要公開分享。</p>
+    <div id="detailBody"></div>
+    <button id="closeDetail" class="soft" type="button">關閉明細</button>
+  </section>
+</section>
+</main>
+<script src="shared/teacher-audit.js?v=16.63"></script>
+</body>
+</html>
